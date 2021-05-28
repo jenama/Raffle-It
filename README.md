@@ -146,3 +146,4 @@ Using a query param `active`, return raffles that are "active" (`active=true`), 
   - Make sure to remove your `node_modules/` before compressing.
   - Your code must include a README file with instructions on how to run your project.
 - For any questions reach out to @Alejo in the [Pursuit Core Workspace](https://pursuit-core.slack.com/)
+# Raffle-It
