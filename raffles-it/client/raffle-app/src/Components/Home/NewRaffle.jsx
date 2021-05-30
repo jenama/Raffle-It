@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 
-export default function NewRaffle({ name, setName, secretToken, setSecretToken }) {
+export default function NewRaffle({ name, setName, secretToken, setSecretToken, setReset, reset }) {
   
   function handleName (e) {
     setName(e.target.value)
@@ -12,9 +13,21 @@ export default function NewRaffle({ name, setName, secretToken, setSecretToken }
     setSecretToken(e.target.value)
   }
   
-  function handleSubmit (e) {
+  async function handleSubmit (e) {
     e.preventDefault()
-    console.log('add')
+    try {
+      const baseUrl = `http://localhost:4100`
+      const endpoint = `/all/raffles`
+      const data = {
+        name:name,
+        secret_token: secretToken
+      }
+      const addRaffle= await axios.post(`${baseUrl} + ${endpoint}`, data)
+      console.log('add', addRaffle)
+    } catch (error) {
+      console.log("error", error);
+    }
+    setReset(true)
   }
   
   return (

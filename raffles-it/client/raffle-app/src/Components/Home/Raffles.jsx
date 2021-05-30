@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-export default function Raffles({raffles, setRaffles,getAllRaffles
+export default function Raffles({raffles,selected,setSelected 
 }) {
  
-  // useEffect(() => {
-  //   getAllRaffles()
-  // });
+  
 
   return (
     <div className="raffles-list">
@@ -19,6 +17,8 @@ export default function Raffles({raffles, setRaffles,getAllRaffles
             <div className="raffle" key={i}>
               <h3>{raffle.name}</h3>
               <p>Created on:{raffle.created_at}</p>
+              <p>Winner id:{raffle.winner_id}</p>
+              <p>Raffled on:{raffle.raffled_at}</p>
             </div>
           );
         })}

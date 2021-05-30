@@ -7,6 +7,8 @@ export default function Home() {
   const [name, setName] = useState("");
   const [secretToken, setSecretToken] = useState("");
   const [raffles, setRaffles] = useState([]);
+  const [reset, setReset] = useState(false)
+  const [selected, setSelected] = useState(false)
 
   useEffect(() => {
     async function getAllRaffles() {
@@ -31,11 +33,14 @@ export default function Home() {
         setName={setName}
         secretToken={secretToken}
         setSecretToken={setSecretToken}
+        reset={reset}
+        setReset={setReset}
+        
       />
       <Raffles
         raffles={raffles}
-        setRaffles={setRaffles}
-        // getAllRaffles={getAllRaffles}
+        selected={selected}
+        setSelected={setSelected}
       />
     </div>
   );

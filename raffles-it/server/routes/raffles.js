@@ -90,9 +90,9 @@ router.post("/", async (req, res, next) => {
                           VALUES($1,$2)
                           RETURNING *`;
 
-    const insertData = await db.None(insertQuery, [
+    const insertData = await db.one(insertQuery, [
       req.body.name,
-      req.body.secret_token,
+      req.body.secret_token
     ]);
     res.status(201);
     res.json({
