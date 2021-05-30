@@ -37,14 +37,6 @@ server.on('listening', onListening);
  * Normalize a port into a number, string, or false.
  */
 
- app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
-});
 
 function normalizePort(val) {
   var port = parseInt(val, 10);
