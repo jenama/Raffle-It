@@ -1,0 +1,22 @@
+.raffle{
+    border:grey 2px solid;
+    box-shadow: rgb(180, 173, 162);
+    margin: 5px;
+    padding:10px;
+    width: 300px;
+}
+
+.raffles-array {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+input {
+    border: grey 2px solid;
+    width: 500px;
+    padding: 5px;
+    margin: 5px;
+}

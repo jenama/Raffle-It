@@ -17,7 +17,7 @@ export default function NewRaffle({ name, setName, secretToken, setSecretToken, 
     e.preventDefault()
     try {
       const baseUrl = `http://localhost:4100`
-      const endpoint = `/all/raffles`
+      const endpoint = `/raffles`
       const data = {
         name:name,
         secret_token: secretToken

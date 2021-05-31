@@ -9,7 +9,7 @@ CREATE TABLE raffles
     name VARCHAR,
     secret_token VARCHAR,
     created_at TIMESTAMPTZ DEFAULT NOW(),
-    raffled_at TIMESTAMPTZ DEFAULT NOW(),
+    raffled_at TIMESTAMPTZ, 
     winner_id INT 
 );
 
@@ -21,33 +21,22 @@ CREATE TABLE users (
     lastname VARCHAR NOT NULL,
     email VARCHAR UNIQUE,
     phone VARCHAR NOT NULL,
-    registered_at TIMESTAMPTZ
+    registered_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- DROP TABLE IF EXISTS; cd 
-
-
--- ALTER TABLE users
--- ADD CONSTRAINT fk_users_raffles FOREIGN KEY
--- (raffle_id) REFERENCES raffles
--- (id);
-
-INSERT INTO raffles (name, secret_token)
-VALUES ('raffle #1','win123'),
-        ('raffle #2','hello123');
+INSERT INTO raffles (name, secret_token, winner_id)
+VALUES ('raffle #1','win123', 2),
+        ('raffle #2','hello123', 1);
 
 INSERT INTO users
     (firstname, lastname, raffle_id, email, phone)
 VALUES
     ('Johanne', 'Enama', 1, 'je@email.com', '+ 1(123)-456-7890'),
-    ('John', 'Doe', 1, 'john@doe.com', '+1(000)-000-0000');
+    ('John', 'Doe', 2, 'john@doe.com', '+1(000)-000-0000');
 
 
-ALTER TABLE raffles
-ADD  FOREIGN KEY
+ALTER TABLE raffles  
+ADD CONSTRAINT fk_winner_id FOREIGN KEY
 (winner_id) REFERENCES users
 (id);
 
--- ALTER TABLE users
--- ADD CONSTRAINT CHK_raffle_id CHECK
--- (raffle_id = 1);

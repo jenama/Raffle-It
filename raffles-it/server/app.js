@@ -28,7 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 
-app.use('/all/raffles', rafflesRouter);
+app.use('/raffles', rafflesRouter);
 // app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler

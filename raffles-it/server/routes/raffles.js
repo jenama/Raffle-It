@@ -47,7 +47,7 @@ router.get('/:id/participants', async(req,res,next) => {
   const id = req.params.id
   console.log('raf id', id)
   try {
-    const participantsQuery =`SELECT users.id, raffle_id,firstname,lastname,email,phone,registered_at FROM users LEFT JOIN raffles ON users.raffle_id = raffles.id WHERE raffles.id =$1`
+    const participantsQuery =`SELECT users.id, raffle_id, firstname,lastname,email,phone,registered_at FROM users LEFT JOIN raffles ON users.raffle_id = raffles.id WHERE raffles.id =$1`
     const participantsData = await db.any(participantsQuery,id) 
     console.log('participant', participantsData)
     res.status(200)
@@ -67,7 +67,7 @@ router.get('/:id/participants', async(req,res,next) => {
 router.get('/:id/winner', async(req, res) => {
   const raffleId = req.params.id
   try {
-    const winnerQuery = `SELECT * FROM users WHERE id=$1`
+    const winnerQuery = `SELECT * FROM users WHERE raffle_id=$1`
     const winnerData = await db.one(winnerQuery, raffleId)
     console.log(winnerData)
     res.status(200)
@@ -111,29 +111,29 @@ router.post("/", async (req, res, next) => {
 router.post("/:id/participants", async (req, res, next) => {
  
   let raffleId = req.params.id
+  req.body.raffle_id = raffleId
   
   console.log('raffle id',raffleId)
   try {
-    const insertQuery = `INSERT INTO users(firstname,lastname,email,phone)
-                          VALUES($1,$2,$3,$4)
+    const insertQuery = `INSERT INTO users(raffle_id, firstname,lastname,email,phone)
+                          VALUES($1,$2,$3,$4,$5)
+                          RETURNING*
                          `
-
-    await db.none(insertQuery,[
+  await db.one(insertQuery,[
+      req.body.raffle_id,
       req.body.firstname,
       req.body.lastname,
       req.body.email,
       req.body.phone,
-      raffleId
       ])
     res.status(201);
     res.json({
-      payload: [
-        req.body.firstname,
-        req.body.lastname,
-        req.body.email,
-        req.body.phone,
-        raffleId
-      ],
+      payload: {
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        email: req.body.email,
+        phone: req.body.phone,
+      },
       msg: `A new participant has been successfully entered to the raffle.`
     });
   } catch (error) {
@@ -147,9 +147,12 @@ router.post("/:id/participants", async (req, res, next) => {
 
 router.put('/:id/winner', async(req, res,next) => {
   const raffleId = req.params.id
+  // const raffledTime = new Date('YYYY-MM-DDTHH:mm:ss.sssZ').toISOString()
+  // // req.body.raffled_at = raffledTime
+  ;
   try {
-    const updateQuery = `UPDATE raffles SET winner_id = $1 WHERE id =$2 AND secret_token = $3`
-    await db.any(updateQuery, [raffleId, req.body.winner_id, req.body.secret_token])
+    const updateQuery = `UPDATE raffles SET winner_id = $1, name = $2, secret_token = $3, raffled_at = $4, created_at = $5 WHERE id = $6 RETURNING*`
+    await db.any(updateQuery, [raffleId, req.body.winner_id, req.body.secret_token, req.body.raffled_at, req.body.created_at, req.body.name])
     res.status(201)
     res.json({
       body: req.body.secret_token,
