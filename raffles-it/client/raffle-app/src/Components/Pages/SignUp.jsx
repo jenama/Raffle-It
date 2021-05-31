@@ -14,7 +14,8 @@ export default function SignUp({
   setPhone,
   participant, 
   setParticipant,
-  id
+  id, 
+  name
 }) {
 
 
@@ -30,7 +31,7 @@ export default function SignUp({
         email: email,
         phone: phone,
       };
-      const addParticipant = await axios.post(`${baseUrl} + ${endpoint}`, data);
+      const addParticipant = await axios.post(`${baseUrl}${endpoint}`, data);
       console.log("add", addParticipant);
       setParticipant(addParticipant)
     } catch (error) {
@@ -40,8 +41,8 @@ export default function SignUp({
 
   return (
     <div className="sign-up">
-    hello
-      <h2>{}</h2>
+
+      <h2>{name}</h2>
       <form onSubmit={handleParticipantRegisteration}>
         <label>First Name*</label>
         <input

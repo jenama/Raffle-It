@@ -6,8 +6,8 @@ import { Link } from 'react-router-dom';
         <div>
             <nav>
                 <Link to='/'>All Raffles</Link> {' '}
-                <Link to={`/register`}>Register</Link> {' '}
-                <Link to='/participants'>Participants</Link> {' '}
+                <Link to={`/raffle/${id}/register`}>Register</Link> {' '}
+                <Link to={`/raffle/${id}/participants`}>Participants</Link> {' '}
                 <Link to='/winner'>Pick Winner</Link>
             </nav>
         </div>

@@ -115,7 +115,7 @@ router.post("/:id/participants", async (req, res, next) => {
   
   console.log('raffle id',raffleId)
   try {
-    const insertQuery = `INSERT INTO users(raffle_id, firstname,lastname,email,phone)
+    const insertQuery = `INSERT INTO users(raffle_id, firstname, lastname,email,phone)
                           VALUES($1,$2,$3,$4,$5)
                           RETURNING*
                          `
@@ -151,11 +151,13 @@ router.put('/:id/winner', async(req, res,next) => {
   // // req.body.raffled_at = raffledTime
   ;
   try {
-    const updateQuery = `UPDATE raffles SET winner_id = $1, name = $2, secret_token = $3, raffled_at = $4, created_at = $5 WHERE id = $6 RETURNING*`
-    await db.any(updateQuery, [raffleId, req.body.winner_id, req.body.secret_token, req.body.raffled_at, req.body.created_at, req.body.name])
+    const updateQuery = `UPDATE raffles SET winner_id = abs(Random())  WHERE  winner_id IS NULL AND id = $1`
+    await db.any(updateQuery, [raffleId,  req.body.raffled_at, req.body.winner_id])
     res.status(201)
     res.json({
-      body: req.body.secret_token,
+      payload:{
+       secret_token: req.body.secret_token
+      },
       status:'success',
       msg:'Successfully selected a winner'
     })
@@ -163,7 +165,7 @@ router.put('/:id/winner', async(req, res,next) => {
       res.status(500)
      res.json({
         status: 'failed',
-        msg: 'The incorrect secret token entered'
+        msg: 'Something went wrong'
       })
       console.log("error", error)
   }
