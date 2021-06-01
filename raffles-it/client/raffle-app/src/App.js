@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 import Home from "./Components/Pages/Home/Home";
-import RaffleProfile from "./Components/Pages/RaffleProfile";
+import RaffleProfile from "./Components/Pages/RaffleProfile/RaffleProfile";
 import axios from "axios";
-import ReactDOM from "react-dom";
-import { useParams } from "react-router-dom";
+import Winner from './Components/Pages/RaffleProfile/Winner'
 import "./App.css";
-
 
 function App() {
   const [name, setName] = useState("");
@@ -18,9 +16,9 @@ function App() {
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [participant, setParticipant] = useState("");
+  const [participants, setParticipants] = useState([]);
+  const [msg, setMsg] = useState('')
 
-  const { id } = useParams();
 
   useEffect(() => {
     async function getAllRaffles() {
@@ -28,7 +26,6 @@ function App() {
         const url = `http://localhost:4100/raffles`;
         const { data } = await axios.get(url);
         setRaffles(data.payload);
-        console.log("data", data);
       } catch (error) {
         console.log("error", error);
       }
@@ -49,6 +46,8 @@ function App() {
             setReset={setReset}
             raffles={raffles}
             setRaffles={setRaffles}
+            setMsg={setMsg}
+            msg={msg}
           />
         </Route>
         <Route path={`/raffle/:id`}>
@@ -62,10 +61,15 @@ function App() {
             setEmail={setEmail}
             setPhone={setPhone}
             raffles={raffles}
-            setParticipant={setParticipant}
-            participant={participant}
-            id={id}
+            setParticipants={setParticipants}
+            participants={participants}
             name={name}
+            secretToken={secretToken}
+            setSecretToken={setSecretToken}
+            reset={reset}
+            setReset={setReset}
+            setMsg={setMsg}
+            msg={msg}
           />
         </Route>
       </Switch>

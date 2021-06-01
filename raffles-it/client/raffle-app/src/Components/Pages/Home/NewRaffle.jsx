@@ -22,7 +22,7 @@ export default function NewRaffle({ name, setName, secretToken, setSecretToken, 
         name:name,
         secret_token: secretToken
       }
-      const addRaffle= await axios.post(`${baseUrl} + ${endpoint}`, data)
+      const addRaffle= await axios.post(`${baseUrl}${endpoint}`, data)
       console.log('add', addRaffle)
     } catch (error) {
       console.log("error", error);

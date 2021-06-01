@@ -1,0 +1,18 @@
+.winner-container {
+ --box-shadow-color: palegoldenrod;
+  margin: auto;
+  width: 50%;
+  height: 50%;
+  box-shadow: 0 4px 8px 0 rgb(0, 0, 0);
+  padding: 7.5rem;
+  text-align: center;
+    color: red
+}
+
+h2 {
+  font-size: 40px;
+}
+
+h4 {
+    font-size: 20px;
+}

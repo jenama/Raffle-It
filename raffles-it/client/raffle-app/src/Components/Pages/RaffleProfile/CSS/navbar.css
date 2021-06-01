@@ -1,0 +1,26 @@
+nav {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.541);
+  overflow: hidden;
+  text-align: center;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  cursor: default;
+  height: 3.5em;
+  line-height: 1.7em;
+  color: black;
+  font-family: sans-serif;
+  font-size: 1em;
+  top: 50%;
+ left:0
+
+}
+nav a {
+  float: left;
+  display: block;
+  text-align: center;
+  margin: 10px 15px 15px 10px;
+  /* padding: 5px 10px; */
+  text-decoration: none;
+  color: black;
+}

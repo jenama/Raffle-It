@@ -9,7 +9,7 @@ export default function Home({ name, setName, setSecretToken, secretToken, reset
 
 
   return (
-    <div>
+    <div className='home'>
       <NewRaffle
         name={name}
         setName={setName}

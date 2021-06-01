@@ -1,9 +1,12 @@
 .raffle{
-    border:grey 2px solid;
-    box-shadow: rgb(180, 173, 162);
+    /* border:grey 2px solid;
+    box-shadow: rgb(180, 173, 162); */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.541);
     margin: 5px;
     padding:10px;
     width: 300px;
+    height: 200px;
+    color: blue;
 }
 
 .raffles-array {
@@ -20,3 +23,10 @@ input {
     padding: 5px;
     margin: 5px;
 }
+
+a {
+    text-decoration: none;
+}
+
+
+
