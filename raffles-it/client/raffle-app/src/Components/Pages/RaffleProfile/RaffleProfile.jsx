@@ -33,6 +33,7 @@ export default function RaffleProfile({
   const [winner, setWinner] = useState('')
 
   const { id } = useParams();
+  
   useEffect(() => {
     async function getRaffleInfo() {
       try {
@@ -50,6 +51,9 @@ export default function RaffleProfile({
     <div className="raffle-profile">
       <Navbar id={id} />
       <h1>Welcome to {raffle.name}'s Raffle</h1>
+      <h3>Here are some rules:</h3>
+     <p>Be respectful</p>
+     <p>Winners will be chosen at random</p>
       <Switch>
         <Route path={`/raffle/:id/register`}>
           <SignUp
@@ -66,6 +70,10 @@ export default function RaffleProfile({
             id={id}
             setMsg={setMsg}
             msg={msg}
+            reset={reset}
+            setReset={setReset}
+            setParticipants={setParticipants}
+            participants={participants}
           />
         </Route>
         <Route path={`/raffle/:id/participants`}>

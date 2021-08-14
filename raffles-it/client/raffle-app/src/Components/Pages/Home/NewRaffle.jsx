@@ -1,51 +1,108 @@
-import React, { useState } from "react";
+import React from "react";
 import axios from "axios";
+import Button from "@material-ui/core/Button";
+import { makeStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
 
+const useStyles = makeStyles((theme) => ({
+  margin: {
+    margin: theme.spacing(1),
+  },
+  extendedIcon: {
+    marginRight: theme.spacing(1),
+  },
+  root: {
+    "& .MuiTextField-root": {
+      margin: theme.spacing(1),
+      width: 200,
+    },
+  },
+}));
 
-export default function NewRaffle({ name, setName, secretToken, setSecretToken, setReset, reset }) {
-  
-  function handleName (e) {
-    setName(e.target.value)
-    console.log('name', e.target.value)
+export default function NewRaffle({
+  name,
+  setName,
+  secretToken,
+  setSecretToken,
+  setReset,
+  reset,
+  msg,
+  setMsg,
+  submitted,
+  setSubmitted,
+}) {
+  const classes = useStyles();
+
+  function handleName(e) {
+    setName(e.target.value);
   }
 
-  function handleToken (e) {
-    setSecretToken(e.target.value)
+  function handleToken(e) {
+    setSecretToken(e.target.value);
   }
-  
-  async function handleSubmit (e) {
-    e.preventDefault()
-    try {
-      const baseUrl = `http://localhost:4100`
-      const endpoint = `/raffles`
-      const data = {
-        name:name,
-        secret_token: secretToken
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    if (name && secretToken) {
+      try {
+        const baseUrl = `http://localhost:4100`;
+        const endpoint = `/raffles`;
+        const data = {
+          name: name,
+          secret_token: secretToken,
+        };
+         await axios.post(`${baseUrl}${endpoint}`, data);
+        setSubmitted(true);
+        setMsg("Successfully entered a new raffle");
+      } catch (error) {
+        console.log("error", error);
       }
-      const addRaffle= await axios.post(`${baseUrl}${endpoint}`, data)
-      console.log('add', addRaffle)
-    } catch (error) {
-      console.log("error", error);
+    } else {
+      setMsg("Please enter a name and secret token!");
+      setReset("");
     }
-    setReset(true)
   }
-  
+
   return (
     <div className="new-raffle">
       <h2>New Raffle:</h2>
       <form onSubmit={handleSubmit}>
         <div className="inputs">
-          <label>Raffle Name:*</label>
+          <div>{msg}</div>
+          <TextField
+            id="filled-error-helper-text"
+            label="Raffle Name*"
+            defaultValue={name}
+            // helperText="Incorrect entry."
+            onChange={handleName} 
+          />
           <br />
-          <input type="text" onChange={handleName} value={name}/>
-          <br />
-          <label>Raffle Secret Token:*</label>
-          <br />
-          <input type="text"  onChange={handleToken} value={secretToken}/>
+          <TextField
+            id="filled-error-helper-text"
+            label="Raffle Secret Token*"
+            defaultValue={secretToken}
+            // helperText="Incorrect entry."
+            onChange={handleToken}
+            disabled={submitted} 
+          />
         </div>
-        <div>You must remember the Raffle Token because it will </div>
-        <div className='btn-submit'>
-          <input type="submit" value='Create New Raffle'/>
+        <br></br>
+        <div>
+          You must remember the Raffle Token because it will be asked when
+          picking a winner
+        </div>
+        <br></br>
+        <div className="btn-submit">
+          <Button
+            type="submit"
+            variant="outlined"
+            size="large"
+            color="primary"
+            className={classes.margin}
+          >
+            Create New Raffle
+          </Button>
         </div>
       </form>
     </div>

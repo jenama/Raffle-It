@@ -3,12 +3,11 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const cors = require('cors')
-
-
+const cors = require('cors');
+const bodyParser = require('body-parser');
 
 const rafflesRouter = require('./routes/raffles');
-// const usersRouter = require('./routes/');
+// const rafflesRouter2 = require('./routes/raffles2');
 
 const app = express();
 
@@ -18,18 +17,16 @@ app.set('view engine', 'jade');
 
 app.use(cors());
 app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(express.static(path.join(__dirname, "../frontend/build"));
 app.use(express.static(path.join(__dirname, 'public')));
 
-
-
-
-
-
 app.use('/raffles', rafflesRouter);
-// app.use('/users', usersRouter);
+// app.use('/raffles2', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -45,6 +42,10 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/build/index.html"));
 });
 
 module.exports = app;

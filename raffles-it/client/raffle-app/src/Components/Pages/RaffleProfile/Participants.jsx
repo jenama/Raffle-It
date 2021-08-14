@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
-import ReactDOM from "react-dom";
-import { useParams } from "react-router-dom";
 import axios from "axios";
 import './CSS/Participants.css'
 
-export default function Participants({ raffles, id, participants, setParticipants }) {
+export default function Participants({ id, participants, setParticipants }) {
+
+  const [participantFilter, setParticipantFilter] = useState('')
+  const [participantsFilterArray,setParticipantsFilterArray] = useState([])
+  
   useEffect(() => {
     async function getAllParticipants() {
         try {
@@ -18,14 +20,30 @@ export default function Participants({ raffles, id, participants, setParticipant
     }
     getAllParticipants()
   }, []);
-console.log('participants', participants)
-  return (
-      
+
+
+   const searchParticipant = (event) => {
+      setParticipantFilter(event.target.value)
+     
+      let filteredArray = participants.filter(participant => {
+          if(participant.firstname === participantFilter || participant.lastname === participantFilter){
+            return true
+          } else {
+            return false
+          }
+      })
+      setParticipantsFilterArray(filteredArray)
+      console.log('participants filter Array', participantsFilterArray)
+    }
+
+
+  return (   
     <div className="participants-container">
+        <input type ='text' onChange={searchParticipant} value={participantsFilterArray}/>
         <h2>Participants: {participants.length} total</h2>
         <div className='participants'>
             {participants.map((participant, i) => {
-                return(
+                return (
                     <div className='participant' key={i}>
                       <div className='left'>
                         <img src='https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png'/>

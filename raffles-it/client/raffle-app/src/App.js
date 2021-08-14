@@ -1,37 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Switch, Route } from "react-router-dom";
 import Home from "./Components/Pages/Home/Home";
 import RaffleProfile from "./Components/Pages/RaffleProfile/RaffleProfile";
-import axios from "axios";
-import Winner from './Components/Pages/RaffleProfile/Winner'
 import "./App.css";
 
 function App() {
   const [name, setName] = useState("");
   const [secretToken, setSecretToken] = useState("");
   const [raffles, setRaffles] = useState([]);
-  const [reset, setReset] = useState(false);
-  const [selected, setSelected] = useState(false);
+  const [reset, setReset] = useState('');
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [participants, setParticipants] = useState([]);
   const [msg, setMsg] = useState('')
+  const [submitted, setSubmitted] = useState(false)
 
-
-  useEffect(() => {
-    async function getAllRaffles() {
-      try {
-        const url = `http://localhost:4100/raffles`;
-        const { data } = await axios.get(url);
-        setRaffles(data.payload);
-      } catch (error) {
-        console.log("error", error);
-      }
-    }
-    getAllRaffles();
-  }, []);
 
   return (
     <div className="App">
@@ -48,6 +33,8 @@ function App() {
             setRaffles={setRaffles}
             setMsg={setMsg}
             msg={msg}
+            submitted={submitted}
+            setSubmitted={setSubmitted}
           />
         </Route>
         <Route path={`/raffle/:id`}>
@@ -70,6 +57,8 @@ function App() {
             setReset={setReset}
             setMsg={setMsg}
             msg={msg}
+            submitted={submitted}
+            setSubmitted={setSubmitted}
           />
         </Route>
       </Switch>
