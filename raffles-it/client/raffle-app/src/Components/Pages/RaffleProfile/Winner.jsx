@@ -6,14 +6,12 @@ import axios from "axios";
 import "./CSS/Winner.css";
 
 export default function Winner({ id, winner, setWinner }) {
-  // console.log('winner', winner)
   useEffect(() => {
     async function getWinner() {
       try {
         const url = `http://localhost:4100/raffles/${id}/winner`;
         const { data } = await axios.get(url);
         setWinner(data.payload[0]);
-        console.log("winnerr?", data);
       } catch (error) {
         console.log("error", error);
       }
