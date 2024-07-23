@@ -18,5 +18,8 @@
     "url": "https://github.com/jenama/raffle-it/issues"
   },
   "homepage": "https://github.com/jenama/raffles-it",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "@babel/plugin-transform-private-methods": "^7.24.7"
+  }
 }
